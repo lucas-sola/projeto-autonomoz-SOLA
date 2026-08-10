@@ -1,63 +1,80 @@
-const produtoRepository = require('../repositories/produtoRepository');
+const produtoService = require('../services/produtoService');
 
 class ProdutoController {
-    // GET /produtos
+    /**
+     * GET /produtos
+     * Acessar todos os produtos cadastrados.
+     */
     async listar(req, res) {
         try {
-            const [linhas] = await produtoRepository.listarTodos();
-            res.status(200).json(linhas);
+            const produtos = await produtoService.listarTodos();
+            res.status(200).json(produtos);
         } catch (erro) {
-            res.status(500).json({ mensagem: 'Erro ao buscar produtos' });
+            res.status(500).json({ mensagem: 'Erro ao buscar produtos.' });
         }
     }
 
-    // GET /produtos/:id
+    /**
+     * GET /produtos/:id
+     * Acessar um produto específico pelo ID.
+     */
     async buscarPorId(req, res) {
         const { id } = req.params;
         try {
-            const [linhas] = await produtoRepository.buscarPorId(id);
-            if (linhas.length === 0) return res.status(404).json({ mensagem: 'Produto não encontrado' });
-            res.status(200).json(linhas);
+            const produto = await produtoService.buscarPorId(id);
+            res.status(200).json(produto);
         } catch (erro) {
-            res.status(500).json({ mensagem: 'Erro ao buscar produto' });
+            // Caso o service lance erro de "não encontrado"
+            res.status(404).json({ mensagem: erro.message });
         }
     }
 
-    // POST /produtos
+    /**
+     * POST /produtos
+     * Criar um novo produto no sistema.
+     * Campos: nome_produto, descricao, estoque_minimo.
+     */
     async cadastrar(req, res) {
         try {
-            const resultado = await produtoRepository.salvar(req.body);
-            // Retorna 201 (Created) conforme o exemplo da sua documentação
+            const resultado = await produtoService.cadastrar(req.body);
+            
+            // Retorna Status 201 (Created) conforme a documentação [4]
             res.status(201).json({ 
-                id_produto: resultado.insertId, 
-                ...req.body 
+                ID_produto: resultado.insertId, // ID gerado pelo banco
+                nome_produto: req.body.nome_produto,
+                descricao: req.body.descricao,
+                estoque_minimo: req.body.estoque_minimo
             });
         } catch (erro) {
-            res.status(500).json({ mensagem: 'Erro ao cadastrar produto' });
+            res.status(400).json({ mensagem: erro.message });
         }
     }
 
-    // PUT /produtos/:id
+    /**
+     * PUT /produtos/:id
+     * Alterar dados de um produto existente.
+     */
     async atualizar(req, res) {
         const { id } = req.params;
         try {
-            await produtoRepository.atualizar(id, req.body);
-            res.status(200).json({ mensagem: 'Produto atualizado com sucesso' });
+            await produtoService.atualizar(id, req.body);
+            res.status(200).json({ mensagem: 'Produto atualizado com sucesso.' });
         } catch (erro) {
-            res.status(500).json({ mensagem: 'Erro ao atualizar produto' });
+            res.status(400).json({ mensagem: erro.message });
         }
     }
 
-    // DELETE /produtos/:id
+    /**
+     * DELETE /produtos/:id
+     * Deletar produto do sistema.
+     */
     async excluir(req, res) {
         const { id } = req.params;
         try {
-            await produtoRepository.excluir(id);
-            res.status(200).json({ mensagem: 'Produto removido com sucesso' });
+            await produtoService.excluir(id);
+            res.status(200).json({ mensagem: 'Produto removido com sucesso.' });
         } catch (erro) {
-            res.status(500).json({ mensagem: 'Erro ao excluir produto' });
+            res.status(400).json({ mensagem: erro.message });
         }
     }
 }
-
-module.exports = new ProdutoController();
