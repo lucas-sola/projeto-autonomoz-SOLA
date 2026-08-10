@@ -78,3 +78,5 @@ class ProdutoController {
         }
     }
 }
+
+module.exports = new ProdutoController();

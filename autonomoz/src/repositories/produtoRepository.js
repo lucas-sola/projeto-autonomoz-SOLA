@@ -3,7 +3,7 @@ const db = require('../config/database');
 class ProdutoRepository {
     // Busca todos os produtos na tabela
     async listarTodos() {
-        const sql = 'SELECT * FROM PRODUTO';
+        const sql = 'SELECT * FROM Produto';
         return db.query(sql);
     }
 
