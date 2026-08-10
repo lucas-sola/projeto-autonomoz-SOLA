@@ -6,21 +6,16 @@ const routes = require('./routes');
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Essencial para ler JSON do Postman
+app.use(express.urlencoded({ extended: true })); // Suporte extra para formulários
 
-// Envia os arquivos do front-end (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, 'view/Jornal-SESI-Final-main')));
-
-// Envia a pasta de uploads como arquivos estáticos
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Rota principal para carregar o index.html do front
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'view/Jornal-SESI-Final-main/index.html'));
 });
 
-app.use('/api', routes); // Prefixo /api para organizar melhor
+app.use('/api', routes); // Prefixo obrigatório: http://localhost:3000/api/...
 
 module.exports = app;
-
-                                
