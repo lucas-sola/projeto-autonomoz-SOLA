@@ -5,17 +5,22 @@ const routes = require('./routes');
 
 const app = express();
 
+// Middlewares de configuração
 app.use(cors());
-app.use(express.json()); // Essencial para ler JSON do Postman
-app.use(express.urlencoded({ extended: true })); // Suporte extra para formulários
+app.use(express.json()); // Essencial para processar JSON, como nos cadastros de funcionários (RF-001) [3]
+app.use(express.urlencoded({ extended: true })); // Suporte para dados de formulários
 
-app.use(express.static(path.join(__dirname, 'view/Jornal-SESI-Final-main')));
+app.use(express.static(path.join(__dirname, 'autonomoz-view')));
+
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// 3. Alterado: Rota principal para carregar o index do sistema Autonomoz
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'view/Jornal-SESI-Final-main/index.html'));
+    // Certifique-se de que o arquivo index.html está diretamente dentro da pasta 'src/view'
+    res.sendFile(path.join(__dirname, 'view/index.html'));
 });
 
-app.use('/api', routes); // Prefixo obrigatório: http://localhost:3000/api/...
+// 4. Prefixo de API conforme a documentação de rotas da Autonomoz [5]
+app.use('/api', routes); 
 
 module.exports = app;
