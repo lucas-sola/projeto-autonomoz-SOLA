@@ -532,6 +532,13 @@ LEFT JOIN Lote_Produto l ON a.fk_lote = l.id_lote
 WHERE a.resolvido = FALSE
 ORDER BY a.gerado_em DESC;
 
+
+UPDATE usuario SET cargo_id = ID_DO_CARGO_GERENTE WHERE id = 1;
+
+SELECT id_usuario, matricula, nome_completo, tipo_acesso, cargo_descritivo, criado_em 
+FROM Usuarios 
+ORDER BY id_usuario DESC;
+
 -- ============================================================================
 -- FIM DO ARQUIVO
 -- ============================================================================
