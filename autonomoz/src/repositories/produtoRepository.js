@@ -18,9 +18,7 @@ class ProdutoRepository {
     async salvar(produto) {
         const { codigo_item, nome_produto, descricao, fk_subcategoria, fk_fornecedor, unidade_medida, valor_unitario, estoque_minimo, estoque_atual } = produto;
         
-        const sql = `INSERT INTO Produto (codigo_item, nome_produto, descricao, fk_subcategoria, 
-                     fk_fornecedor, unidade_medida, valor_unitario, estoque_minimo, estoque_atual) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const sql = `INSERT INTO Produto (codigo_item, nome_produto, descricao, fk_subcategoria, fk_fornecedor, unidade_medida, valor_unitario, estoque_minimo, estoque_atual) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         
         const [resultado] = await db.query(sql, [
             codigo_item, nome_produto, descricao, fk_subcategoria, 
