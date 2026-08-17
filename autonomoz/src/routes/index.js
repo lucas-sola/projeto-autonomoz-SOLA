@@ -33,7 +33,7 @@ const produtoRoutes = require('./produtoRoutes');
 
 // Definição dos caminhos base para cada módulo conforme a documentação técnica
 router.use('/usuarios', usuarioRoutes);
-// router.use('/cargos', cargoRoutes);
+router.use('/cargos', cargoRoutes);
 // router.use('/categorias', categoriaRoutes);
 // router.use('/fornecedores', fornecedorRoutes);
 // router.use('/localizacao', localizacaoRoutes);
