@@ -24,3 +24,5 @@ app.get('/', (req, res) => {
 app.use('/api', routes); 
 
 module.exports = app;
+
+// teste
