@@ -74,6 +74,15 @@ CREATE TABLE Usuarios (
     INDEX idx_usuarios_tipo_acesso (tipo_acesso)
 ) ENGINE=InnoDB;
 
+
+CREATE TABLE Cargo (
+    id_cargo INT AUTO_INCREMENT PRIMARY KEY,
+    nome_cargo VARCHAR(80) NOT NULL UNIQUE,
+    descricao VARCHAR(255) NULL,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+
 CREATE TABLE Sub_Categoria (
     id_subcategoria     INT AUTO_INCREMENT PRIMARY KEY,
     fk_categoria        INT NOT NULL,
@@ -539,6 +548,17 @@ SELECT id_usuario, matricula, nome_completo, tipo_acesso, cargo_descritivo, cria
 FROM Usuarios 
 ORDER BY id_usuario DESC;
 
+-- ############################################################################
+-- PARTE 4: EDIÇÃO DE TABELAS
+-- ############################################################################
+
+-- Adiciona a referência na tabela de Usuários
+ALTER TABLE Usuarios ADD COLUMN fk_cargo INT NULL;
+ALTER TABLE Usuarios ADD CONSTRAINT fk_usuarios_cargo 
+    FOREIGN KEY (fk_cargo) REFERENCES Cargo(id_cargo) ON DELETE SET NULL;
+
 -- ============================================================================
 -- FIM DO ARQUIVO
 -- ============================================================================
+
+

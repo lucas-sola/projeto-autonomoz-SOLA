@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Importação de todas as rotas mapeadas na documentação
 const usuarioRoutes = require('./usuarioRoutes');
-// const cargoRoutes = require('./cargoRoutes');
+const cargoRoutes = require('./cargoRoutes');
 // const categoriaRoutes = require('./categoriaRoutes');
 // const fornecedorRoutes = require('./fornecedorRoutes');
 // const localizacaoRoutes = require('./localizacaoRoutes');
