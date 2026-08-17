@@ -4,7 +4,7 @@ const router = express.Router();
 // Importação de todas as rotas mapeadas na documentação
 const usuarioRoutes = require('./usuarioRoutes');
 // const cargoRoutes = require('./cargoRoutes');
-// const categoriaRoutes = require('./categoriaRoutes');
+const categoriaRoutes = require('./categoriaRoutes');
 // const fornecedorRoutes = require('./fornecedorRoutes');
 // const localizacaoRoutes = require('./localizacaoRoutes');
 const produtoRoutes = require('./produtoRoutes');
@@ -34,7 +34,7 @@ const produtoRoutes = require('./produtoRoutes');
 // Definição dos caminhos base para cada módulo conforme a documentação técnica
 router.use('/usuarios', usuarioRoutes);
 // router.use('/cargos', cargoRoutes);
-// router.use('/categorias', categoriaRoutes);
+router.use('/categorias', categoriaRoutes);
 // router.use('/fornecedores', fornecedorRoutes);
 // router.use('/localizacao', localizacaoRoutes);
 router.use('/produtos', produtoRoutes);
