@@ -40,8 +40,12 @@ class UsuarioService {
             throw new Error('Acesso negado: Apenas gerentes podem cadastrar funcionários.');
         }
 
-        if (!dados.matricula || !dados.nome_completo || !dados.senha_hash) {
+        if (!dados.matricula || !dados.nome_completo || (!dados.senha_hash && !dados.senha)) {
             throw new Error('Dados obrigatórios (matrícula, nome, senha) ausentes.');
+        }
+
+        if (dados.senha && !dados.senha_hash) {
+            dados.senha_hash = dados.senha;
         }
 
         dados.fk_usuario_criador = adminId;
@@ -67,6 +71,7 @@ class UsuarioService {
     // Aliases para compatibilidade
     async getAll() { return this.listarTodos(); }
     async getById(id) { return this.buscarPorId(id); }
+    async registerNewUser(adminId, dados) { return this.cadastrar(adminId, dados); }
     async authenticate(matricula, senha) { return this.autenticar(matricula, senha); }
     async update(id, userData) { return this.atualizar(id, userData); }
     async delete(id) { return this.excluir(id); }
